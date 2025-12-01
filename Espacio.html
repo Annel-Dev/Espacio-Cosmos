@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Espacio | Diseño Profesional Optimizado</title>
+    <!-- Incluir Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configuración de Tailwind para colores espaciales y fuente Inter
+        tailwind.config = {
+          theme: {
+            extend: {
+              fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+              },
+              colors: {
+                'space-bg': '#0A0A1A', // Fondo muy oscuro
+                'space-primary': '#E0E7FF', // Texto claro
+                'space-secondary': '#A3A3B9', // Texto secundario/citas
+                'space-accent': '#7C3AED', // Púrpura cósmico para acentos
+                'space-glass': 'rgba(12, 12, 25, 0.6)',
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+        /* Estilos base */
+        body {
+            background-color: #0A0A1A;
+            color: #E0E7FF;
+            overflow-x: hidden;
+            font-size: 1.125rem;
+            line-height: 1.75;
+        }
+
+        /* FONDO DINÁMICO GLOBAL (Solo carga imagen en la sección de inicio) */
+        #global-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -20;
+            background-color: #0A0A1A; /* Aseguramos color base negro */
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+            opacity: 0.5;
+        }
+        
+        #bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: -10;
+        }
+
+        /* Keyframes para la animación de brillo del título y subtítulos */
+        @keyframes pulse-light {
+            0% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); }
+            50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 35px rgba(255, 255, 255, 0.5); }
+            100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); }
+        }
+
+        /* Clase de animación compartida para H1 y H2 */
+        .animated-title {
+            background: linear-gradient(180deg, #ffffff 0%, #d0d0d0 100%); 
+            -webkit-background-clip: text;
+            /* FIX DE COMPATIBILIDAD AÑADIDO AQUÍ */
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            animation: pulse-light 5s infinite ease-in-out;
+        }
+
+        /* SCROLL REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Overlay de Transición de Pantalla Completa */
+        #fade-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0A0A1A;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay de Transición de Pantalla Completa -->
+    <div id="fade-overlay"></div>
+    
+    <!-- Backgrounds -->
+    <div id="global-bg"></div>
+    <div id="bg-overlay"></div>
+    
+    <!-- Navegación -->
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-3xl h-16 rounded-full z-50 flex items-center justify-center 
+                bg-space-glass backdrop-blur-xl border border-white/30 shadow-2xl">
+        <div class="flex space-x-4 sm:space-x-8">
+            <a href="#inicio" onclick="fadeAndScroll(event, 'inicio')" class="text-space-primary hover:text-white transition duration-300 font-semibold px-3 py-2 rounded-xl hover:bg-white/10">Inicio</a>
+            <a href="#definicion" onclick="fadeAndScroll(event, 'definicion')" class="text-space-primary hover:text-white transition duration-300 font-semibold px-3 py-2 rounded-xl hover:bg-white/10">Qué es</a>
+            <a href="#estructura" onclick="fadeAndScroll(event, 'estructura')" class="text-space-primary hover:text-white transition duration-300 font-semibold px-3 py-2 rounded-xl hover:bg-white/10">Estructura</a>
+            <a href="#teoria-avanzada" onclick="fadeAndScroll(event, 'teoria-avanzada')" class="text-space-primary hover:text-white transition duration-300 font-semibold px-3 py-2 rounded-xl hover:bg-white/10 hidden sm:block">Teoría</a>
+            <a href="#curiosidades" onclick="fadeAndScroll(event, 'curiosidades')" class="text-space-primary hover:text-white transition duration-300 font-semibold px-3 py-2 rounded-xl hover:bg-white/10">Datos</a>
+        </div>
+    </nav>
+
+    <!-- Hero (Única sección con imagen de fondo) -->
+    <header id="inicio" class="min-h-screen flex flex-col justify-center items-center text-center p-6" 
+            data-bg="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2600&auto=format&fit=crop">
+        <div class="reveal max-w-4xl">
+            <p class="text-space-accent text-lg font-bold mb-4 uppercase tracking-widest">Física Cósmica</p>
+            <h1 class="animated-title text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter mb-5">
+                El Espacio Profundo.
+            </h1>
+            <p class="text-space-primary text-xl md:text-2xl font-light opacity-80 max-w-2xl mx-auto">
+                La exploración del cosmos nos revela los límites de la física y la inmensidad del universo.
+            </p>
+        </div>
+    </header>
+
+    <!-- Sección 1: Definición (Sin data-bg) -->
+    <section id="definicion" class="min-h-screen flex flex-col justify-center py-20 px-6"> 
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="reveal text-center mb-16">
+                <h2 class="animated-title text-5xl font-bold mb-4 text-space-primary">¿Qué es el Espacio Exterior?</h2>
+                <p class="text-space-secondary max-w-3xl mx-auto">
+                    No es un vacío, sino un plasma diluido lleno de misterios.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <!-- Card 1 -->
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 lg:p-12 reveal shadow-xl hover:shadow-space-accent/30 transition duration-500 transform hover:scale-[1.01]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe text-space-accent mb-4"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-white">El Vacío Perfecto</h3>
+                    <p class="text-space-secondary">
+                        El espacio es un vacío casi perfecto, con una densidad de menos de una molécula por centímetro cúbico, lo que lo convierte en el entorno más bajo en presión conocido.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 lg:p-12 reveal shadow-xl hover:shadow-space-accent/30 transition duration-500 transform hover:scale-[1.01]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-snowflake text-space-accent mb-4"><path d="M2 12h10"/><path d="M9 14.5a3.5 3.5 0 0 0 5 0"/><path d="M12 2v6"/><path d="M12 18v4"/><path d="m3 21 3-3"/><path d="m15 21 3-3"/></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Temperaturas Extremas</h3>
+                    <p class="text-space-secondary">
+                        La temperatura de fondo de microondas es de solo 2.7 Kelvin $\left(-270.45^\circ C\right)$. Sin embargo, la exposición directa a la luz solar puede calentar objetos a más de $120^\circ C$.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección 2: Estructura del Universo (Sin data-bg) -->
+    <section id="estructura" class="min-h-screen flex flex-col justify-center py-20 px-6"> 
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="reveal text-center mb-16">
+                <h2 class="animated-title text-5xl font-bold mb-4 text-space-primary">La Estructura a Gran Escala</h2>
+                <p class="text-space-secondary max-w-3xl mx-auto">
+                    Desde las galaxias hasta los cúmulos de supercúmulos que definen la red cósmica.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 reveal" data-image-url="https://images.unsplash.com/photo-1543722530-d2c3201371e7?q=80&w=2000&auto=format&fit=crop">
+                    <h3 class="text-xl font-bold mb-3 text-white">Filamentos Cósmicos</h3>
+                    <p class="text-space-secondary text-base">
+                        Las galaxias no están dispersas al azar, sino que se agrupan en vastas estructuras de "red" cósmica separadas por inmensos vacíos.
+                    </p>
+                </div>
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 reveal" data-image-url="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2000&auto=format&fit=crop">
+                    <h3 class="text-xl font-bold mb-3 text-white">Supercúmulos de Galaxias</h3>
+                    <p class="text-space-secondary text-base">
+                        Nuestra Vía Láctea forma parte del Supercúmulo de Laniakea, que abarca más de $10^5$ galaxias y tiene un diámetro de 520 millones de años luz.
+                    </p>
+                </div>
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 reveal" data-image-url="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop">
+                    <h3 class="text-xl font-bold mb-3 text-white">El Fondo Cósmico de Microondas</h3>
+                    <p class="text-space-secondary text-base">
+                        La radiación remanente del Big Bang. Sus ligeras variaciones de temperatura $\left(\Delta T \sim 10^{-5} K\right)$ son las semillas de toda la estructura actual.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección NUEVA: Teoría Avanzada (Sin data-bg) -->
+    <section id="teoria-avanzada" class="min-h-screen flex flex-col justify-center py-20 px-6"> 
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="reveal text-center mb-16">
+                <h2 class="animated-title text-5xl font-bold mb-4 text-space-primary">Fronteras de la Física</h2>
+                <p class="text-space-secondary max-w-3xl mx-auto">
+                    Los conceptos que están redefiniendo nuestra comprensión de la realidad.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Agujeros Negros -->
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 reveal shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-infinity text-space-accent mb-4"><path d="M12 12c-2-2.5-4-5-8-5s-8 2.5-8 5s4 5 8 5s8-2.5 8-5z"/><path d="M12 12c2 2.5 4 5 8 5s8-2.5 8-5s-4-5-8-5s-8 2.5-8 5z"/></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Agujeros Negros</h3>
+                    <p class="text-space-secondary text-base">
+                        Regiones del espacio-tiempo donde la gravedad es tan fuerte que nada, ni siquiera la luz, puede escapar del horizonte de sucesos. Su densidad $\rho \rightarrow \infty$ en la singularidad.
+                    </p>
+                </div>
+                
+                <!-- Ondas Gravitacionales -->
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 reveal shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wave-sine text-space-accent mb-4"><path d="M2.872 17.51a.5.5 0 0 0 .584-.069l3.411-2.457a.5.5 0 0 1 .582-.008l3.411 2.441a.5.5 0 0 0 .584-.069l3.41-2.457a.5.5 0 0 1 .582-.007l3.411 2.441a.5.5 0 0 0 .584-.069l.523-.376"/><path d="M2.872 6.51a.5.5 0 0 0 .584-.069l3.411-2.457a.5.5 0 0 1 .582-.008l3.411 2.441a.5.5 0 0 0 .584-.069l3.41-2.457a.5.5 0 0 1 .582-.007l3.411 2.441a.5.5 0 0 0 .584-.069l.523-.376"/></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Ondas Gravitacionales</h3>
+                    <p class="text-space-secondary text-base">
+                        Predichas por Einstein, son "ondas" en el tejido del espacio-tiempo, creadas por eventos catastróficos como la fusión de agujeros negros (detectadas por LIGO).
+                    </p>
+                </div>
+                
+                <!-- Energía Oscura -->
+                <div class="card bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-3xl p-8 reveal shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket text-space-accent mb-4"><path d="M4.5 20.25l15-15-15-15-3 3 15 15z"/><path d="M2 12l2.5 2.5"/><path d="M7 10l2.5 2.5"/><path d="M12 8l2.5 2.5"/><path d="M17 6l2.5 2.5"/><path d="M15 18l-3-3l-3 3"/></svg>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Energía Oscura</h3>
+                    <p class="text-space-secondary text-base">
+                        Una misteriosa forma de energía que ejerce una presión negativa que impulsa la expansión acelerada del universo. Es el componente dominante de la energía cósmica.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curiosidades (Sin data-bg) -->
+    <section id="curiosidades" class="min-h-screen flex flex-col justify-center py-20 px-6"> 
+        <div class="max-w-4xl mx-auto w-full">
+            <div class="reveal text-center mb-16">
+                <h2 class="animated-title text-5xl font-bold mb-4 text-space-primary">Hechos Reales del Cosmos</h2>
+                <p class="text-space-secondary max-w-3xl mx-auto">
+                    Curiosidades que demuestran que la realidad es a menudo más extraña que la ciencia ficción.
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="fact-item bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center reveal hover:bg-space-glass/80 transition duration-300">
+                    <div class="text-4xl font-extrabold text-space-accent mr-6 mb-3 sm:mb-0 w-12 flex-shrink-0">01</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-1 text-white">El Silencio Extremo</h4>
+                        <p class="text-space-secondary text-base">
+                            El espacio es un vacío, lo que significa que el sonido (que necesita moléculas para vibrar) no tiene medio para viajar. Las explosiones cósmicas ocurren en total silencio.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="fact-item bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center reveal hover:bg-space-glass/80 transition duration-300">
+                    <div class="text-4xl font-extrabold text-space-accent mr-6 mb-3 sm:mb-0 w-12 flex-shrink-0">02</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-1 text-white">Soldadura en Frío Cuántica</h4>
+                        <p class="text-space-secondary text-base">
+                            Si dos piezas de metal puro (sin capa de óxido) se tocan en el vacío del espacio, se fusionan permanentemente al instante. Esto se llama "soldadura en frío".
+                        </p>
+                    </div>
+                </div>
+
+                <div class="fact-item bg-space-glass backdrop-blur-xl border border-space-accent/50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center reveal hover:bg-space-glass/80 transition duration-300">
+                    <div class="text-4xl font-extrabold text-space-accent mr-6 mb-3 sm:mb-0 w-12 flex-shrink-0">03</div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-1 text-white">Más de lo que ves</h4>
+                        <p class="text-space-secondary text-base">
+                            La materia que podemos ver (estrellas, planetas, galaxias) constituye solo el 5% del universo. El 95% restante es Materia Oscura y Energía Oscura.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-12 px-6 border-t border-white/10 bg-space-bg">
+        <p class="text-space-secondary text-sm">Desarrollo Profesional Web | Usando Tailwind CSS | © 2025 Exploración Cósmica</p>
+    </footer>
+
+    <script>
+        // Declaraciones de elementos globales
+        const globalBg = document.getElementById('global-bg');
+        const sections = document.querySelectorAll('section, header');
+        const revealElements = document.querySelectorAll('.reveal');
+
+        // --- LÓGICA DE SCROLL PARA CAMBIAR EL FONDO (Observer 1) ---
+        // Este Observer es para cambiar la imagen de fondo fijo SOLO en la sección 'Inicio'.
+        const bgObserverOptions = {
+            root: null, 
+            threshold: 0.3 
+        };
+
+        const bgObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bgUrl = entry.target.getAttribute('data-bg');
+                    // Solo actualizamos si hay una URL de fondo (solo el header)
+                    if (bgUrl) {
+                        globalBg.style.backgroundImage = `url('${bgUrl}')`;
+                    } else {
+                        // Si no hay data-bg, aseguramos que el fondo fijo sea solo negro (optimizando)
+                        globalBg.style.backgroundImage = 'none';
+                    }
+                }
+            });
+        }, bgObserverOptions);
+
+        sections.forEach(section => { 
+            bgObserver.observe(section); 
+        });
+
+
+        // --- LÓGICA DE SCROLL REVEAL Y FADE-OUT (Observer 2 - Optimizado y Funcional) ---
+        // Este Observer maneja la animación de entrada y la de "fade-out al salir por arriba".
+        const revealObserverOptions = {
+            root: null,
+            // Utilizamos el threshold para detectar visibilidad en ambos sentidos (entrada y salida).
+            threshold: [0, 0.5, 1.0] 
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const element = entry.target;
+                
+                // 1. Fade IN (El elemento está visible)
+                if (entry.intersectionRatio > 0) {
+                    element.classList.add('active');
+                }
+
+                // 2. Fade OUT/Reset (El elemento se desplaza fuera de la vista completamente)
+                // Se ejecuta si entry.intersectionRatio es 0 Y el elemento está por encima del viewport (boundingClientRect.top < 0).
+                if (entry.boundingClientRect.top < 0 && entry.intersectionRatio === 0) {
+                    element.classList.remove('active');
+                }
+            });
+        }, revealObserverOptions);
+
+        revealElements.forEach((element) => {
+            revealObserver.observe(element);
+        });
+        
+        // --- FUNCIÓN DE TRANSICIÓN FADE Y SCROLL (Mantiene el efecto rápido de pantalla negra) ---
+        function fadeAndScroll(event, targetId) {
+            event.preventDefault(); 
+            const overlay = document.getElementById('fade-overlay');
+            const targetElement = document.getElementById(targetId);
+
+            if (!targetElement || !overlay) {
+                console.error('Elemento objetivo o overlay no encontrado:', targetId);
+                return;
+            }
+
+            // 1. Fade IN (pantalla negra total)
+            overlay.style.pointerEvents = 'auto'; 
+            overlay.style.opacity = '1';
+
+            // 2. Después del fade IN (0.3s), hacer el salto INSTANTÁNEO
+            setTimeout(() => {
+                // Hacer el scroll instantáneo (el 'instant' es clave)
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80, // Offset para barra fija
+                    behavior: 'instant' 
+                });
+
+                // 3. Iniciar el fade OUT del overlay (revelar la sección)
+                setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    overlay.style.pointerEvents = 'none'; 
+                }, 100); 
+
+            }, 300); 
+        }
+        
+        // Inicializar el fondo al cargar la página (para el header)
+        window.onload = () => {
+             // Cargar el fondo inicial solo si el header tiene data-bg
+            const initialHeader = document.getElementById('inicio');
+            if(initialHeader && initialHeader.getAttribute('data-bg')) {
+                globalBg.style.backgroundImage = `url('${initialHeader.getAttribute('data-bg')}')`;
+            } else {
+                globalBg.style.backgroundImage = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
